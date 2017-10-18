@@ -1,0 +1,190 @@
+<head>
+    <title>MegaCity</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="cliente/css/style.css" />
+    <link href="cliente/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">-->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">-->
+    <script src="cliente/js/fileinput.js" type="text/javascript"></script>
+</head>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <section class="container">
+        <section class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="" href="#myPage"><img src="cliente/logo/Megacity.png" class="logo"></a>
+        </section>
+        <section class="collapse navbar-collapse" id="myNavbar">
+            <br>
+            <ul class="nav navbar-nav navbar-right ">
+                <li><a id="misPuntos">Mis Puntos</a></li>
+                <li><a id="logOut">Logout</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-collapse">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#tiendas">Tiendas</a></li>
+                <li><a data-toggle="modal" data-target="#registrarFacturas">Registrar facturas</a></li>
+                <li><a href="#services">Gestionar datos personales</a></li>
+                <li><a href="#services">Canjear Puntos</a></li>
+            </ul>
+        </section>
+    </section>
+    <section>
+    </section>
+</nav>
+
+<!-- Container (About Section) -->
+<section id="inicio" class="container-fluid text-center bg-grey sectionPublicidad">
+    <section id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators  ">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <section class="carousel-inner " role="listbox">
+            <section class="item active ">
+                <h4 class="h4"><br><span><img class="imgPublicidad" src="http://172.20.10.6/MegaCity1.6/publicidad/publicidad1.jpg"></span></h4>
+            </section>
+            <section class="item">
+                <h4 class="h4"><br><span><img class="imgPublicidad" src="http://172.20.10.6/MegaCity1.6/publicidad/publicidad2.png"></span></h4>
+            </section>
+            <section class="item">
+                <h4 class="h4"><br><span><img class="imgPublicidad" src="http://172.20.10.6/MegaCity1.6/publicidad/publicidad3.jpg"></span></h4>
+            </section>
+        </section>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left  " aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </section>
+    <br>
+    <br>
+</section>
+		
+<section class="modal fade" id="registrarFacturas" role="dialog">
+    <section class="modal-dialog modal-lg">
+        <section class="modal-content">
+            <section class="modal-tittle headLogin">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="headLogin"><span class="glyphicon glyphicon-picture"></span>Subir Factura</h4>
+            </section>
+            <section class="modal-body table-responsive">
+                <form id="uploadimage" action="" method="post" enctype="multipart/form-data">
+				    <table class="table table-bordered">
+                        <col span="3"/>
+                            <thead>
+                                <th><label class="columna">Seleccione la imagen</label></th>
+                                <th><label class="columna">Seleccione almacen</label></th>
+                                <th><label class="columna">Valor factura</label></th>
+							</thead>
+                            <tbody>
+                                <tr class="success">
+                                    <td>
+                                        <section id="selectImage" class="seleccionImagen">
+                                            <input id="file" name="file" type="file" class="file" required="true">
+                                            <!--<input type="submit" value="Subir" class="submit" />-->
+                                        </section>
+								    </td>
+									<td>
+                                        <section id="almacen" class="seleccionImagen">
+                                            <select name="seleccion" id="seleccion" class="form-control" required>
+                                                <option value="">----------</option>
+                                                <option value="1">Americanino</option>
+                                                <option value="2">Big john</option>
+                                                <option value="3">Bosi</option>
+                                            </select>
+                                        </section>	
+									</td>
+                                    <td>
+                                        <section>
+                                            <input type="number" id="valor_factura" required="true">
+                                        </section>
+                                    </td>
+								</tr>								
+							</tbody>
+					</table>
+                </form>
+                <!--<h4 id='loading' >Cargando..</h4>-->
+            </section>
+            <section class="modal-footer ">
+                <button type="submit" class="btn btn-danger btn-default pull-left " data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar </button>
+            </section>
+        </section>
+    </section>
+</section>
+
+<section class="modal fade" id="myModal" role="dialog">
+    <section class="modal-dialog">
+        <!-- Modal content-->
+        <section class="modal-content">
+            <section class="modal-header">
+                <h4 class="modal-title" id="modal-title"></h4>
+            </section>
+            <section class="modal-body">
+                <section id="message">
+                </section>
+            </section>
+            <section class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetForm()">Cerrar</button>
+            </section>
+        </section>
+    </section>
+</section>
+
+<!-- Container (tiendas) -->
+<section id="tiendas" class="container-fluid bg-grey sectionTiendas">
+    <section class="row">
+        <section class="col-sm-12">
+            <section class="container">
+                <section id="PANEL_0" class="panel panel-primary text-justify">
+                    <section class="panel-heading">
+                        <h3 class="panel-title">Nuestras Tiendas Disponibles</h3>
+                    </section>
+                </section>        
+            </section>
+        </section>
+    </section>
+</section>
+
+<!-- Container (Contact Section) -->
+<section id="contact" class="container-fluid bg-blue">
+    <h2 class="text-center">CONTACTO</h2>
+    <section class="row">
+        <section class="col-sm-5">
+            <p>Contactenos, responderemos lo mas pronto posible.</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span> Armenia, quindío</p>
+            <p><span class="glyphicon glyphicon-phone"></span> +54 1515151515</p>
+            <p><span class="glyphicon glyphicon-envelope"></span> contactenos@megacity.com</p>
+        </section>
+        <section class="col-sm-7 slideanim">
+            <section class="row">
+                <section class="col-sm-6 form-group">
+                    <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required>
+                </section>
+                <section class="col-sm-6 form-group">
+                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                </section>
+            </section>
+            <textarea class="form-control" id="comments" name="comments" placeholder="Comentario" rows="5"></textarea>
+            <br>
+            <section class="row">
+                <section class="col-sm-12 form-group">
+                    <button class="btn btn-default pull-right" type="submit">Enviar</button>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>

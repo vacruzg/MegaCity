@@ -1,0 +1,40 @@
+.seleccionImagen
+{
+width: 70%;
+} 
+
+.tableOpcion
+{
+   text-align: center;
+  line-height: 30px;
+ 
+  border-collapse: separate;
+  //border-spacing: 0;
+  border: 2px solid #0D3689;
+  width: auto;
+  margin: 10px auto;
+  border-radius: .30rem;
+  
+}
+
+.tableOpcion col{
+   
+    width: auto;
+
+}
+
+.table tr th {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.logo
+{
+ //background-color:6276cd; 
+ width:200px;
+  
+  
+}
