@@ -1,5 +1,5 @@
 /*!
- * bootstrap-fileinput v4.4.5
+ * bootstrap-fileinput v4.4.6
  * http://plugins.krajee.com/file-input
  *
  * Author: Kartik Visweswaran
@@ -606,7 +606,7 @@
             var self = this, tMain1, tMain2, tPreview, tFileIcon, tClose, tCaption, tBtnDefault, tBtnLink, tBtnBrowse,
                 tModalMain, tModal, tProgress, tSize, tFooter, tActions, tActionDelete, tActionUpload, tActionDownload,
                 tActionZoom, tActionDrag, tIndicator, tTagBef, tTagBef1, tTagBef2, tTagAft, tGeneric, tHtml, tImage,
-                tText, tVideo, tAudio, tFlash, tObject, tPdf, tOther, tZoomCache, vDefaultDim;
+                tText, tOffice, tVideo, tAudio, tFlash, tObject, tPdf, tOther, tZoomCache, vDefaultDim;
             tMain1 = '{preview}\n' +
                 '<div class="kv-upload-progress kv-hidden"></div><div class="clearfix"></div>\n' +
                 '<div class="input-group {class}">\n' +
@@ -619,15 +619,15 @@
                 '    </div>\n' +
                 '</div>';
             tMain2 = '{preview}\n<div class="kv-upload-progress kv-hidden"></div>\n<div class="clearfix"></div>\n{remove}\n{cancel}\n{upload}\n{browse}\n';
-            tPreview = //'<div class="file-preview {class}">\n' +
-                //'    {close}' +
+            tPreview = '<div class="file-preview {class}">\n' +
+                '    {close}' +
                 '    <div class="{dropClass}">\n' +
-                //'    <div class="file-preview-thumbnails">\n' +
-                //'    </div>\n' +
-                //'    <div class="clearfix"></div>' +
-               // '    <div class="file-preview-status text-center text-success"></div>\n' +
+                '    <div class="file-preview-thumbnails">\n' +
+                '    </div>\n' +
+                '    <div class="clearfix"></div>' +
+                '    <div class="file-preview-status text-center text-success"></div>\n' +
                 '    <div class="kv-fileinput-error"></div>\n' +
-               // '    </div>\n' +
+                '    </div>\n' +
                 '</div>';
             tClose = '<button type="button" class="close fileinput-remove">&times;</button>\n';
             tFileIcon = '<i class="glyphicon glyphicon-file"></i>';
@@ -700,6 +700,8 @@
                 'alt="{caption}" {style}>\n';
             tText = '<textarea class="kv-preview-data file-preview-text" title="{caption}" readonly {style}>' +
                 '{data}</textarea>\n';
+            tOffice = '<iframe class="kv-preview-data file-preview-office" ' +
+                'src="https://docs.google.com/gview?url={data}&embedded=true" {style}></iframe>';
             tVideo = '<video class="kv-preview-data file-preview-video" controls {style}>\n' +
                 '<source src="{data}" type="{type}">\n' + $h.DEFAULT_PREVIEW + '\n</video>\n';
             tAudio = '<audio class="kv-preview-data file-preview-audio" controls {style}>\n<source src="{data}" ' +
@@ -747,6 +749,7 @@
                     html: tHtml,
                     image: tImage,
                     text: tText,
+                    office: tOffice,
                     video: tVideo,
                     audio: tAudio,
                     flash: tFlash,
@@ -760,6 +763,7 @@
                     image: {width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%"},
                     html: {width: "213px", height: "160px"},
                     text: {width: "213px", height: "160px"},
+                    office: {width: "213px", height: "160px"},
                     video: {width: "213px", height: "160px"},
                     audio: {width: "100%", height: "30px"},
                     flash: {width: "213px", height: "160px"},
@@ -771,6 +775,7 @@
                     image: {width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%"},
                     html: {width: "100%", height: "160px"},
                     text: {width: "100%", height: "160px"},
+                    office: {width: "100%", height: "160px"},
                     video: {width: "100%", height: "auto"},
                     audio: {width: "100%", height: "30px"},
                     flash: {width: "100%", height: "auto"},
@@ -782,6 +787,7 @@
                     image: {width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%"},
                     html: vDefaultDim,
                     text: vDefaultDim,
+                    office: {width: "100%", height: "100%", 'max-width': "100%", 'min-height': "480px"},
                     video: {width: "auto", height: "100%", 'max-width': "100%"},
                     audio: {width: "100%", height: "30px"},
                     flash: {width: "auto", height: "480px"},
@@ -799,6 +805,12 @@
                     text: function (vType, vName) {
                         return $h.compare(vType, 'text.*') || $h.compare(vName, /\.(xml|javascript)$/i) ||
                             $h.compare(vName, /\.(txt|md|csv|nfo|ini|json|php|js|css)$/i);
+                    },
+                    office: function (vType, vName) {
+                        return $h.compare(vType, 'msword') || $h.compare(vType, 'ms-excel') ||
+                            $h.compare(vType, 'ms-powerpoint') ||
+                            $h.compare(vType, 'vnd.openxmlformats-officedocument') ||
+                            $h.compare(vName, /\.(doc|docx|rtf|odt|xls|xlsx|ods|ppt|pptx|pps|pot|potx)$/i);
                     },
                     video: function (vType, vName) {
                         return $h.compare(vType, 'video.*') && ($h.compare(vType, /(ogg|mp4|mp?g|mov|webm|3gp)$/i) ||
@@ -2619,7 +2631,8 @@
                     }
                     self.ajaxAborted = false;
                     self._raise('filebeforedelete', [vKey, extraData]);
-                    if (self.ajaxAborted instanceof Promise) { // jshint ignore:line
+                    //noinspection JSUnresolvedVariable,JSHint
+                    if (self.ajaxAborted instanceof Promise) {
                         self.ajaxAborted.then(function (result) {
                             if (!result) {
                                 $.ajax(settings);
@@ -2964,7 +2977,7 @@
                         self._errorHandler(evt, caption);
                     };
                     reader.onload = function (theFile) {
-                        var uint, hex, fileInfo, bytes = [], contents, mime, readTextImage = function (textFlag) {
+                        var hex, fileInfo, uint, byte, bytes = [], contents, mime, readTextImage = function (textFlag) {
                             var newReader = new FileReader();
                             newReader.onerror = function (theFileNew) {
                                 self._errorHandler(theFileNew, caption);
@@ -2988,12 +3001,12 @@
                         });
                         if (knownTypes === 0) {// auto detect mime types from content if no known file types detected
                             uint = new Uint8Array(theFile.target.result);
-                            uint.forEach(function (byte) {
-                                bytes.push(byte.toString(16));
-                            });
+                            for (j = 0; j < uint.length; j++) {
+                                byte = uint[j].toString(16);
+                                bytes.push(byte);
+                            }
                             hex = bytes.join('').toLowerCase().substring(0, 8);
                             mime = $h.getMimeType(hex, '', '');
-
                             if ($h.isEmpty(mime)) { // look for ascii text content
                                 contents = $h.arrayBuffer2String(reader.result);
                                 mime = $h.isSvg(contents) ? 'image/svg+xml' : $h.getMimeType(hex, contents, file.type);
@@ -3246,7 +3259,11 @@
                     self._checkDimensions(i, 'Large', $img, $thumb, fname, 'Height', params);
                 }
                 self._raise('fileimageloaded', [previewId]);
-                exifObject = window.piexif ? window.piexif.load(iData) : null;
+                try {
+                    exifObject = window.piexif ? window.piexif.load(iData) : null;
+                } catch (err) {
+                    exifObject = null;
+                }
                 self.loadedImages.push({
                     ind: i,
                     img: $img,
@@ -4061,7 +4078,7 @@
         showBrowse: true,
         showPreview: true,
         showRemove: true,
-        showUpload: true,
+        showUpload: false,
         showCancel: true,
         showClose: true,
         showUploadedThumbs: true,
@@ -4166,7 +4183,7 @@
         elPreviewImage: null,
         elPreviewStatus: null,
         elErrorContainer: null,
-        errorCloseButton: '<button class="close kv-error-close">&times;</button>',
+        errorCloseButton: '<button type="button" class="close kv-error-close">&times;</button>',
         slugCallback: null,
         dropZoneEnabled: true,
         dropZoneTitleClass: 'file-drop-zone-title',
@@ -4184,17 +4201,17 @@
     $.fn.fileinputLocales.en = {
         fileSingle: 'file',
         filePlural: 'files',
-        browseLabel: 'Examinar &hellip;',
-        removeLabel: 'Remover',
+        browseLabel: 'Browse &hellip;',
+        removeLabel: 'Remove',
         removeTitle: 'Clear selected files',
         cancelLabel: 'Cancel',
         cancelTitle: 'Abort ongoing upload',
-        uploadLabel: 'Subir',
+        uploadLabel: 'Upload',
         uploadTitle: 'Upload selected files',
         msgNo: 'No',
         msgNoFilesSelected: 'No files selected',
         msgCancelled: 'Cancelled',
-        msgPlaceholder: 'Seleccione un archivo...',
+        msgPlaceholder: 'Select {files}...',
         msgZoomModalHeading: 'Detailed Preview',
         msgFileRequired: 'You must select a file to upload.',
         msgSizeTooSmall: 'File "{name}" (<b>{size} KB</b>) is too small and must be larger than <b>{minSize} KB</b>.',

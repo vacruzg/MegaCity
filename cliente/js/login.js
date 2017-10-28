@@ -1,4 +1,5 @@
-API_URL = "http://172.20.10.6/MegaCity1.6/servicios/";
+API_URL = "http://localhost/MegaCity/servicios/";
+API_URL_IMAGES = "http://localhost/MegaCity/";
 
 //En caso que den clic en guardar
 $(document).on("ready", setApp);
@@ -50,11 +51,7 @@ function loadAnswer(){
 
 function loadFormulario(){
 	$("#myPage").load("cliente/paginaInicial.html", function(){
-		$("#acceso").on("submit", function(e){
-			e.preventDefault();
-			sendData();
-			$("#answ").text("Cargando...");
-		});
+		$("#bodyInicio").load("cliente/complemento_pagina_inicio_cliente.html #inicio", cargarInicio);
 	});
 }
 
@@ -104,7 +101,141 @@ function logOut(){
 	loadFormulario();
 }
 
+function cargarMenu(){
+	$("#acceso").on("submit", function(e){
+			e.preventDefault();
+			sendData();
+			$("#answ").text("Cargando...");
+	});
+	$("#inicio").on("click", cargarInicio);
+	$("#almacenes").on("click", cargarAlmacenes);
+	$("#eventos").on("click", cargarEventos);
+	$("#registro").on("click", cargarRegistro);
+}
+
 function resetForm()
 {
 	$('#uploadimage').trigger("reset");
 }
+
+function resetPage(){
+	$("#bodyAlmacenes").empty();
+	$("#bodyEventos").empty();
+	$("#bodyRegistro").empty();
+}
+
+function cargarInicio(){
+	resetPage();
+	cargarEventos();
+}
+
+function cargarAlmacenes(){
+	resetPage();
+	$("#bodyAlmacenes").load("cliente/complemento_pagina_inicio_cliente.html #almacenes", cargarMenu);
+}
+
+function cargarEventos(){
+	resetPage();
+	$("#bodyEventos").load("cliente/complemento_pagina_inicio_cliente.html #eventos", function(){
+		getAll();
+		cargarMenu();
+	});
+}
+
+function cargarRegistro(){
+	resetPage();
+	$("#bodyRegistro").load("cliente/complemento_pagina_inicio_cliente.html #registro", cargarMenu);
+}
+
+function getAll(){
+	
+	$.ajaxSetup({
+	    // force ajax call on all browsers
+	    cache: false,
+	    // Enables cross domain requests
+	    crossDomain: true,
+	    // Helps in setting cookie
+	    xhrFields: {
+	        withCredentials: false
+	    }
+	});
+
+
+	$.ajax({
+		 type: "POST",
+		 data: {
+			 "operacion" : "getAll",
+			 "datos" : ""
+		 }, //Son los parametros que voy a enviar a la consulta
+		 url: API_URL + "eventos/eventos.php", //Aqui se pone la URL del servicio a consumir
+		 success: function(data){
+			 var datos = JSON.parse(data);
+			 //Si no hay problema y consultamos bien
+			 if(datos['estado'] == true){				 
+				var eventos = document.getElementById("listado-eventos");
+
+				console.log(datos);
+
+				if(datos['datos'].length >0){
+
+					divItem = "";
+
+					$.each( datos['datos'], function( key, value ) {
+			  
+					  //construyo como quiero pintar los datos, esto se puede hacer diferente. Es un ejemplo
+					  divItem += '<section class="col evento">';
+					  divItem += '<section class="tituloEvento"><strong>' + value.titulo + '</strong></section>';
+
+					  if(value.foto==null){
+					  	divItem += '<section><img class="fotoEvento" src="' + API_URL_IMAGES + 'fotos/Eventos/error.jpg"/></section>';
+					  }
+					  else{
+					  	divItem += '<section><img class="fotoEvento" src="' + API_URL_IMAGES + value.foto + '"/></section>';
+					  }
+
+					  //divItem += '<section><img class="fotoEvento" src="http://localhost/MegaCity1.5/fotos/Eventos/error.jpg"/></section>';
+					  divItem += '<section class="descripcionEvento">' + value.descripcion + '</section>';
+					  divItem += '<section><section class="fechaEvento"><strong>Fecha: </strong>' + value.fecha + '</section>';
+					  
+					  var date = new Date();
+					  var hora = formatTime(date, value.hora);
+
+					  divItem += '<section class="horaEvento"><strong>Hora: </strong>' + hora + '</section></section>';
+					  divItem += '</section>';
+					  
+					  //Pongo en el div los datos que voy creando.
+					  eventos.innerHTML = divItem;		 
+					  
+				  });
+					
+				}
+				else{
+					$("#listado-pendientes").append("No se encontraron datos");		 
+				}
+				 
+			 }
+			 else{
+				 $("#listado-pendientes").append("ha ocurrido un error "+datos['datos']);
+			 }
+			 
+		 },
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#listado-pendientes").append("ha ocurrido un error consultando los datos");
+		 }
+	});
+	
+ }
+
+ function formatTime(date, time){
+ 	var array = time.split(":", 2);
+ 	date.setHours(array[0]);
+ 	date.setMinutes(array[1]);
+ 	var hours = date.getHours();
+  	var minutes = date.getMinutes();
+  	var ampm = hours >= 12 ? 'pm' : 'am';
+  	hours = hours % 12;
+  	hours = hours ? hours : 12; // the hour '0' should be '12'
+  	minutes = minutes < 10 ? '0'+minutes : minutes;
+  	var strTime = hours + ':' + minutes + ' ' + ampm;
+  	return strTime;
+ }

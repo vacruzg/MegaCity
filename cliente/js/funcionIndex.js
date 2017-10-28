@@ -36,6 +36,7 @@
 
 function funcionModal()
 {
+    
      $('#myModal').modal(); 
 }
 

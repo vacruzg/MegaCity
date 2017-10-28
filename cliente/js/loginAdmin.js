@@ -1,10 +1,10 @@
-API_URL = "http://172.20.10.6/MegaCity1.6/servicios/admin/";
+API_URL = "http://localhost/MegaCity/";
 
 //En caso que den clic en guardar
 $(document).on("ready", setApp);
 
 function setApp(){
-	if(localStorage.getItem("idUserMegacity")){
+	if(localStorage.getItem("admin")){
 		loadAnswer();
 	}
 	else{
@@ -13,13 +13,15 @@ function setApp(){
 }
 
 function loadAnswer(){
-	$("#admin").load("moduloadmin.html", function(){
-		$("#logOut").on("click", logOut);
+	
+	$("#myPage").load("pages/areaAdmin.html", function(){
+
+		
 	});
 }
 
 function loadFormulario(){
-	$("#admin").load("login.html", function(){
+		$("#myPage").load("pages/login.html", function(){
 		$("#acceso").on("submit", function(e){
 			e.preventDefault();
 			sendData();
@@ -40,7 +42,7 @@ function sendData(){
 		},
 		type: 'POST',
 		datatype: 'json',
-		url: API_URL + "login_admin.php",
+		url: API_URL + "/admin/login_admin.php",
 		success: function(data){
 			var dataParser = JSON.parse(data);
 			saveStorage(dataParser);
@@ -60,7 +62,7 @@ function saveStorage(data){
 	}
 	else{
 		if(localStorage){
-			localStorage.setItem("idUserMegacity", data["username"]);
+			localStorage.setItem("admin", data["username"]);
 			loadAnswer();
 		}
 		else{
@@ -70,7 +72,7 @@ function saveStorage(data){
 }
 
 function logOut(){
-	localStorage.removeItem("idUserMegacity");
+	localStorage.removeItem("admin");
 	loadFormulario();
 }
 

@@ -19,7 +19,7 @@ if(isset($_POST["login"])){
 		$username = $_POST['username'];
 		$password = md5($_POST['password']);
 
-		$sql = "SELECT * FROM USUARIOS u, EMPLEADOS e WHERE u.codigo=e.codigo AND e.codigo='".$username."' AND u.password='".$password."'";
+		$sql = "SELECT * FROM USUARIO u, EMPLEADO e WHERE u.cod_usuario=e.cod_usuario AND e.cod_usuario='".$username."' AND u.password='".$password."'";
 
 		$result = $conn->query($sql);
 
@@ -28,8 +28,8 @@ if(isset($_POST["login"])){
 		if($numrows!=0){
 		
 			while($row = $result->fetch_assoc()){
-				$dbusername = $row['codigo'];
-				$dbpassword = $row['password'];
+				$dbusername = $row['COD_USUARIO'];
+				$dbpassword = $row['PASSWORD'];
 			}
 
 			if($username == $dbusername && $password == $dbpassword){

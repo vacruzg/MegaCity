@@ -33,10 +33,6 @@ body {
       color: #f4511e;
       width: 50px;
   }
-  .logo {
-      color: #f4511e;
-      width: 200px;
-  }
   .thumbnail {
       padding: 0 0 15px 0;
       border: none;
@@ -112,19 +108,13 @@ body {
   }
   .navbar {
       margin-bottom: 0;
-     // background-color: #ED7DEB;
 	 background: linear-gradient(to bottom, rgba(229,109,175,1) 0%,rgba(244,186,224,0) 100%);
-	// background: -moz-radial-gradient(#6276cd,#2e49c3);
-	// background: -webkit-radial-gradient(#6276cd,#2e49c3);
-      //z-index: 9999;
       border: 0;
       font-size: 15px,bold, !important;
       line-height: 1.42857143 !important;
       letter-spacing: 0.3px;
       border-radius: 5px;
-	  margin: 10px;
       font-family: Montserrat, sans-serif;
-     
   }
   .navbar li a, .navbar .navbar-brand {
       color: black !important;
@@ -135,7 +125,6 @@ body {
       color: #fff !important;
       background-color: #94a4eb !important;
       cursor: pointer;
-	  
   }
   .navbar-default .navbar-toggle {
       border-color: transparent;
@@ -153,52 +142,7 @@ body {
       animation-duration: 1s;
       -webkit-animation-duration: 1s;
       visibility: visible;
-  }
-  @keyframes slide {
-    0% {
-      opacity: 0;
-      transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      transform: translateY(0%);
-    }
-  }
-  @-webkit-keyframes slide {
-    0% {
-      opacity: 0;
-      -webkit-transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      -webkit-transform: translateY(0%);
-    }
-  }
-  @media screen and (max-width: 768px) {
-    .col-sm-4 {
-      text-align: center;
-      margin: 25px 0;
-    }
-    .btn-lg {
-        width: 100%;
-        margin-bottom: 35px;
-    }
-	.navbar{
-		background-color: rgba(244,186,224,100);
-	}
-  }
-  @media screen and (max-width: 480px) {
-    .logo {
-        width: 150px;
-    }
-  }
-  
-  .logo
-  {
-      width: 1%;
-      height: auto;
-  }
-  
+  }    
   .imgPublicidad
   {
       width: 70%;
@@ -254,7 +198,7 @@ body {
 
  .sectionQuienesSomos
   {
-    padding: 150px 10px;
+    padding: 100px 10px;
   }
   .botonLogin
   {
@@ -264,4 +208,98 @@ body {
   .botonLogin:hover
   {
     background: #1d639c
+  }
+  #eventos h2{
+	text-align: center;
+  }
+  #eventos span{
+	  display: block;
+	  text-align: center;
+  }
+  .evento{
+	  display: inline-block;
+	  width: 500px;
+	  vertical-align: top;
+	  margin: 10px;
+  }
+  .tituloEvento{
+	  text-align: center;
+  }
+  .descripcionEvento, .fechaEvento, .horaEvento{
+	  text-align: justify;
+  }
+  .fotoEvento{
+	  width: 500px;
+	  height: 300px;
+  }
+  
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: center;
+      margin: 25px 0;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 35px;
+    }
+	.navbar{
+		background-color: rgba(244,186,224,100);
+	}
+	img.logo {
+        width: 60px;
+		padding: 0;
+		margin: 5px 10px;
+    }
+	#myCarousel {
+		display: none;
+	}
+  }
+  @media screen and (max-width: 480px) {
+    img.logo {
+        width: 60px;
+		padding: 0;
+		margin: 5px 10px;
+    }
+	.logoImg {
+		display: inline-block;
+		width: 75%;
+		text-align: center;	
+	}
+	#myCarousel {
+		display: none;
+	}
+	.navbar-right {
+		margin: 0;
+		padding: 0;
+	}
+	.navbar-toggle {
+		float: left;
+	}
+	.evento{
+		width: 300px;
+	}
+	.fotoEvento{
+		width: 300px;
+		height: 200px;
+	}
   }
