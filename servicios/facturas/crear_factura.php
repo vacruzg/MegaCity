@@ -36,12 +36,14 @@ function crearFactura($conn){
 				$cod_factura = consultarCodFactura($conn);		
 
 				$dir = "../../fotos/Facturas/".$localStorage;
+				$dirAux = "fotos/Facturas/".$localStorage;
 
 				if(!file_exists($dir)){
 					mkdir($dir, 0777, true);
 				}
 
 				$dir = $dir.'/'.$cod_factura.'.'.$file_extension;
+				$dirAux = $dirAux.'/'.$cod_factura.'.'.$file_extension;
 
 				if(file_exists($dir)){
 					echo "<span id='invalid'>Error al subir imagen</span><br/>";
@@ -53,7 +55,7 @@ function crearFactura($conn){
 					$sourcePath = $_FILES["file"]["tmp_name"];
 					//$targetPath = $dir."/".$_FILES["file"]["name"]; //Esto incluye el nombre original del archivo
 					$targetPath = $dir;
-					insertarFactura($conn, $localStorage, $dir, $cod_almacen, $valor_factura, $sourcePath, $targetPath);
+					insertarFactura($conn, $localStorage, $dirAux, $cod_almacen, $valor_factura, $sourcePath, $targetPath);
 				}
 			}
 		}
@@ -85,7 +87,7 @@ function consultarCodAlmacen($conn, $nombre_almacen){
 }
 
 function consultarCodFactura($conn){
-	$sql_cod_factura = "SELECT MAX(cod_factura) max FROM facturas";
+	$sql_cod_factura = "SELECT MAX(cod_factura) max FROM factura";
 	$result_cod_factura = $conn->query($sql_cod_factura);
 	
 	if(is_null($result_cod_factura)){
@@ -102,7 +104,7 @@ function consultarCodFactura($conn){
 }
 
 function insertarFactura($conn, $localStorage, $dir, $cod_almacen, $valor_factura, $sourcePath, $targetPath){
-	$sql_factura = "INSERT INTO facturas (cod_usuario, foto, cod_estado, cod_almacen, valor_factura, fecha) VALUES ('".$localStorage."','".$dir."', 3, ".$cod_almacen.",'".$valor_factura."', sysdate())";
+	$sql_factura = "INSERT INTO factura (cod_usuario, foto, cod_estado, cod_almacen, valor_factura, fecha) VALUES ('".$localStorage."','".$dir."', 1, ".$cod_almacen.",'".$valor_factura."', sysdate())";
 
 	$result_factura = $conn->query($sql_factura);
 	//Si ocurrio algun error en la consulta

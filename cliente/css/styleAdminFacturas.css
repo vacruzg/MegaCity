@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+#tablaFacturas{
+	text-align: center;
+	vertical-align: central;
+}
+
+#tablaFacturas th{
+	text-align: center;
+}
+
+.button{
+	width: 100px;
+}
+
+#myImg{
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {
+	opacity: 0.7;
+}
+
+#myImgModal{
+	width: 500px;
+	height: 800px;
+	border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#alertaDanger, #alertaSuccess, #alertaInfo, #alertaWarning{
+	display: none;
+}

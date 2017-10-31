@@ -1,0 +1,60 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    listarFacturasPendientes();
+});
+</script>
+
+<section class="row">
+	<section class="col-lg-12">
+    	<h1 class="page-header" onclick="">Facturas</h1>
+    </section>
+</section>
+
+<section class="row">
+	<section class="col-lg-12">
+        <section class="alert alert-danger" role="alert" id="alertaDanger"></section>
+        <section class="alert alert-success" role="alert" id="alertaSuccess"></section>
+        <section class="alert alert-info" role="alert" id="alertaInfo"></section>
+        <section class="alert alert-warning" role="alert" id="alertaWarning"></section>
+    	<section class="panel panel-info">
+        	<section class="panel-heading">
+            	Facturas pendientes
+            </section>
+            <section class="panel-body">
+            	<table width="100%" class="table table-striped table-bordered table-hover" id="tablaFacturas">
+                	<thead>
+                    	<tr>
+                        	<th>No. factura</th>
+                            <th>Foto factura</th>
+                            <th>Documento cliente</th>
+                            <th>Almacen</th>
+                            <th>Valor factura</th>
+                            <th>Fecha de subida</th>
+                            <th>Puntos otorgados</th>   
+                            <th>Acción</th>
+                            <th>Confirmar</th>                     
+						</tr>
+                    </thead>
+					<tbody id="facturas-pendientes"></tbody>
+				</table>
+
+                <section class="modal fade  in" id="myModal" role="dialog" style="display: none;">
+                                <section class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <section class="modal-content">
+                                        <section class="modal-header headLogin">
+                                            <h4 class="headLogin"><strong>Vista previa</strong></h4>
+                                        </section>
+                                        <section class="modal-body" style="padding:40px 50px;">
+                                            <!-- Modal Content (The Image) -->
+                                            <img id="myImgModal">
+                                            <!-- Modal Caption (Image Text) -->
+                                            <section id="caption"></section>
+                                        </section>
+                                    </section>
+                                </section>
+                </section>
+			</section>
+		</section>
+	</section>
+</section>

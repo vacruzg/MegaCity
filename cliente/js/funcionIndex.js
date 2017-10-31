@@ -1,5 +1,6 @@
  
 	$(document).ready(function () {
+		
                 // Add smooth scrolling to all links in navbar + footer link
                 $(".navbar  a, footer a[href='#myPage']").on('click', function (event) {
                     // Make sure this.hash has a value before overriding default behavior
@@ -32,12 +33,16 @@
                         }
                     });
                 });
-            })
+});
 
 function funcionModal()
 {
-    
-     $('#myModal').modal(); 
+    $('#myModal').modal(); 
 }
 
-    
+function funcionModalFacturas(src)
+{
+    var img = document.getElementById('myImgModal');
+    img.setAttribute("src", src);
+    $('#myModal').modal(); 
+}
