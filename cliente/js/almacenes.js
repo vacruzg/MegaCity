@@ -80,7 +80,7 @@ function listarCategoria()
         theme: 'fe',
         language: 'es',
         uploadUrl: '#',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ['jpg'],
 
         fileActionSettings : {
 // Disable
@@ -185,7 +185,7 @@ function enviarDatos(){
           "nombre_almacen":nombre_almacen ,
           "pagina_web":pagina_web,
           "horario_atencion": horario_atencion,
-          "logo": logo,
+          //"logo": logo,
           "categoria": categoria
          }
 

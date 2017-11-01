@@ -10,6 +10,8 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 $operacion = $_POST['operacion'];//Se obtiene la operación a realizar del servicio tiempo
 $datos = $_POST['datos']; //Se obtienen los diferentes datos con los que se opera.
+//$_FILES["file"];
+ 
 
 //Inicializo objeto para poder operar con la BD
 $conn = obtenerConexionBaseDeDatos();
@@ -136,6 +138,16 @@ function listarCategoria($conn)
 
 //Funcion que crea un registro nuevo en BD
 function crearAlmacenes($conn, $datos){
+
+  
+ if(isset($_FILES["file"]["type"]))
+ {
+    echo "Entra qui".$_FILES["file"];
+ }
+ else
+ {
+     echo "no entra qui";
+ }
     //Inicializamos lo que retornaremos
     $data  = array('estado'=>'', 'datos'=>array());
     

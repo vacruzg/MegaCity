@@ -14,7 +14,7 @@ $(document).ready(function(){
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="agregar" onsubmit="enviarDatos(); return false" accept-charset="utf-8">
+                    <form id="agregar" method="post" onsubmit="enviarDatos(); return false" accept-charset="utf-8">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             Agregar almacen
@@ -41,13 +41,12 @@ $(document).ready(function(){
 
                                       <td> 
                                         <div class="file-loading">
-                                           <input id="file-es" class="fie" type="file" >
+                                           <input id="file" name="file" class="fie" type="file" required="true">
                                         </div>
 
                                       </td>
                                      
                                      <td><select id="categoria" >
-
                                          
                                      </select></td>
                                  </tr>                        
