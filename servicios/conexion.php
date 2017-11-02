@@ -20,7 +20,7 @@ function obtenerConexionBaseDeDatos() {
 
 	$db_server = "localhost";
 	$db_user = "root";
-	$db_pass = "12345";
+	$db_pass = "1234";
 	$db_name = "centro_comercial";
 
 	$conexion = new mysqli($db_server, $db_user, $db_pass, $db_name);

@@ -68,7 +68,7 @@ function crearFactura($conn){
 }
 
 function consultarCodAlmacen($conn, $nombre_almacen){
-	$sql_almacen = "SELECT cod_almacen codigo FROM almacen WHERE nombre_almacen = '".$nombre_almacen."'";
+	$sql_almacen = "SELECT cod_almacen codigo FROM ALMACEN WHERE nombre_almacen = '".$nombre_almacen."'";
 	$result_almacen = $conn->query($sql_almacen);
 	$numrows_almacen = $result_almacen->num_rows;
 
@@ -87,7 +87,7 @@ function consultarCodAlmacen($conn, $nombre_almacen){
 }
 
 function consultarCodFactura($conn){
-	$sql_cod_factura = "SELECT MAX(cod_factura) max FROM factura";
+	$sql_cod_factura = "SELECT MAX(cod_factura) max FROM FACTURA";
 	$result_cod_factura = $conn->query($sql_cod_factura);
 	
 	if(is_null($result_cod_factura)){
@@ -104,7 +104,7 @@ function consultarCodFactura($conn){
 }
 
 function insertarFactura($conn, $localStorage, $dir, $cod_almacen, $valor_factura, $sourcePath, $targetPath){
-	$sql_factura = "INSERT INTO factura (cod_usuario, foto, cod_estado, cod_almacen, valor_factura, fecha) VALUES ('".$localStorage."','".$dir."', 1, ".$cod_almacen.",'".$valor_factura."', sysdate())";
+	$sql_factura = "INSERT INTO FACTURA (cod_usuario, foto, cod_estado, cod_almacen, valor_factura, fecha) VALUES ('".$localStorage."','".$dir."', 1, ".$cod_almacen.",'".$valor_factura."', sysdate())";
 
 	$result_factura = $conn->query($sql_factura);
 	//Si ocurrio algun error en la consulta

@@ -9,7 +9,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 
 $operacion = $_POST['operacion'];//Se obtiene la operación a realizar del servicio tiempo
-$datos = $_POST['datos']; //Se obtienen los diferentes datos con los que se opera.
+//$datos = $_POST['datos']; //Se obtienen los diferentes datos con los que se opera.
 //$_FILES["file"];
  
 
@@ -21,10 +21,12 @@ switch ($operacion){
 	case "listar" : listarAlmacenes($conn);
 					break;
 	
-	case "crear" : crearAlmacenes($conn, $datos);
+	case "crear" : crearAlmacenes($conn);
 					break;
 
-    case "categoria" : listarCategoria($conn, $datos);
+    case "categoria" : listarCategoria($conn);
+                    break;
+    case "crear_categoria" : crearCategoria($conn);
                     break;
 
 }
@@ -32,6 +34,7 @@ switch ($operacion){
 
 function listarAlmacenes($conn)
 {
+    $datos = $_POST['datos'];
 	$data  = array('error'=>'', 'datos'=>array());
 
 	$sql = "SELECT * FROM ALMACEN";
@@ -86,6 +89,7 @@ function listarAlmacenes($conn)
 
 function listarCategoria($conn)
 {
+    $datos = $_POST['datos'];
     $data  = array('error'=>'', 'datos'=>array());
 
     $sql = "SELECT * FROM CATEGORIA";
@@ -137,29 +141,38 @@ function listarCategoria($conn)
 
 
 //Funcion que crea un registro nuevo en BD
-function crearAlmacenes($conn, $datos){
+function crearAlmacenes($conn){
 
-  
- if(isset($_FILES["file"]["type"]))
- {
-    echo "Entra qui".$_FILES["file"];
- }
- else
- {
-     echo "no entra qui";
- }
+  if(isset($_FILES["file"]["type"])){
+
+    $temporary = explode(".", $_FILES["file"]["name"]);
+    $file_extension = end($temporary);
+
     //Inicializamos lo que retornaremos
     $data  = array('estado'=>'', 'datos'=>array());
     
 
     //Capturo los datos que llegan por parametros   
-    $nombre_almacen = $datos['nombre_almacen'];
-    $pagina_web = $datos['pagina_web'];
-    $horario_atencion = $datos['horario_atencion'];
-    $logo = $datos['logo'];
-    $codigo_categoria = $datos['categoria'];
+    $nombre_almacen = $_POST['nombre_almacen'];
+    $pagina_web = $_POST['pagina_web'];
+    $horario_atencion = $_POST['horario_atencion'];
+    //$logo = $datos['logo'];
+    $codigo_categoria = $_POST['categoria'];
+
+    $codigoAlmacen = codigoAlmacen($conn);
+    $dir = "../../fotos/logos/";
+    if(!file_exists($dir)){
+                    mkdir($dir, 0777, true);
+                }
+    $dir = $dir.($codigoAlmacen+1).'.'.$file_extension;
+    $logo = $dir;
+
+    $targetPath = $dir;
+    $sourcePath = $_FILES["file"]["tmp_name"];
+    move_uploaded_file($sourcePath, $targetPath);
+
             
-    $sql = "INSERT INTO ALMACEN (nombre_almacen, enlace_web, horario_atencion,logo) VALUES ('". $nombre_almacen."', '".$pagina_web ."', '". $horario_atencion ."', '". $logo ."')";
+    $sql = "INSERT INTO ALMACEN (cod_almacen,nombre_almacen, enlace_web, horario_atencion,logo) VALUES ('". ($codigoAlmacen+1)."','". $nombre_almacen."', '".$pagina_web ."', '". $horario_atencion ."', '". $logo ."')";
 
    $result = $conn->query($sql);
     $codigoAlmacen = codigoAlmacen($conn);
@@ -190,6 +203,11 @@ function crearAlmacenes($conn, $datos){
     echo json_encode($data);    
     cerrarConexionBaseDeDatos($conn);
 }
+else
+{
+    $data['estado'] = false;
+}
+}
 
 function codigoAlmacen($conn)
 {
@@ -201,8 +219,50 @@ function codigoAlmacen($conn)
   
     $codigo = $row['COD_ALMACEN'];
 
+    if($codigo==null)
+    {
+        $codigo = 1;
+    }
+
    return $codigo;
 
 
 
+}
+
+function crearCategoria($conn)
+{
+    //Inicializamos lo que retornaremos
+    $data  = array('estado'=>'', 'datos'=>array());
+    $datos = $_POST['datos'];
+
+    //Capturo los datos que llegan por parametros   
+    $nombre_categoria= $datos['nombre_categoria'];
+    $descripcion= $datos['descripcion'];
+    
+            
+    $sql = "INSERT INTO CATEGORIA (nombre_categoria,descripcion_categoria) VALUES ('". $nombre_categoria."', '".$descripcion ."')";
+
+   $result = $conn->query($sql);
+   
+    //Si ocurrio algun error en la consulta
+    if(!$result){
+        $data['estado'] = false;
+        $data['datos'] = "Ocurrio un error en la consulta";
+        
+        //De esta forma estamos enviando los datos
+        echo json_encode($data);
+        
+        //Cerramos la conexión
+        cerrarConexionBaseDeDatos($conn);
+        
+        //Terminamos el metodo
+        return;
+    }
+    
+    //Si la consulta se ejecuto con éxito
+    $data['estado'] = true;
+    //De esta forma estamos enviando los datos
+    echo json_encode($data);    
+    cerrarConexionBaseDeDatos($conn);
 }
