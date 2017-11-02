@@ -159,6 +159,14 @@ showUpload : false,
 
 function enviarDatos(){
 
+	$('#tablaagregar').DataTable({
+						responsive:true,
+						"searching": false,
+						"paging": false,
+						"ordering": false
+
+       					 });
+
 	$("#agregar").on("submit", function(e) {
 	e.preventDefault();
      var formData = new FormData(this);
@@ -229,6 +237,14 @@ function enviarDatos(){
 
 function agregarCategoria()
 {
+
+	$('#tablaagregar').DataTable({
+						responsive:true,
+						"searching": false,
+						"paging": false,
+						"ordering": false
+
+       					 });
 	 var nombre_categoria = $("#nombre_categoria").val();
 	 var descripcion = $("#descripcion").val();
 
