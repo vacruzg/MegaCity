@@ -221,7 +221,7 @@ function codigoAlmacen($conn)
 
     if($codigo==null)
     {
-        $codigo = 1;
+        $codigo = 0;
     }
 
    return $codigo;
@@ -240,8 +240,8 @@ function crearCategoria($conn)
     $nombre_categoria= $datos['nombre_categoria'];
     $descripcion= $datos['descripcion'];
     
-            
-    $sql = "INSERT INTO CATEGORIA (nombre_categoria,descripcion_categoria) VALUES ('". $nombre_categoria."', '".$descripcion ."')";
+    $codigoCategoria = codigoCategoria($conn);      
+    $sql = "INSERT INTO CATEGORIA (cod_categoria, nombre_categoria,descripcion_categoria) VALUES ('". ($codigoCategoria+1)."','". $nombre_categoria."', '".$descripcion ."')";
 
    $result = $conn->query($sql);
    
@@ -265,4 +265,25 @@ function crearCategoria($conn)
     //De esta forma estamos enviando los datos
     echo json_encode($data);    
     cerrarConexionBaseDeDatos($conn);
+}
+
+function codigoCategoria($conn)
+{
+   
+    $sql = "SELECT COD_CATEGORIA FROM CATEGORIA ORDER BY COD_CATEGORIA DESC LIMIT 1";
+    $result = $conn->query($sql);
+
+    $row = $result->fetch_assoc();
+  
+    $codigo = $row['COD_CATEGORIA'];
+
+    if($codigo==null)
+    {
+        $codigo = 0;
+    }
+
+   return $codigo;
+
+
+
 }

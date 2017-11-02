@@ -51,28 +51,28 @@ function listarAlmacenes()
 					$('#tablaalmacenes').DataTable({
 						responsive:true,
 						"language": {
-    "decimal":        "",
-    "emptyTable":     "No data available in table",
-    "info":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-    "infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
-    "infoFiltered":   "(filtered from _MAX_ total entries)",
-    "infoPostFix":    "",
-    "thousands":      ",",
-    "lengthMenu":     "Mostrar _MENU_ entradas",
-    "loadingRecords": "Cargando...",
-    "processing":     "Procesanso...",
-    "search":         "Buscar:",
-    "zeroRecords":    "No se encontraron datos..",
-    "paginate": {
-        "first":      "Primero",
-        "last":       "Last",
-        "next":       "Siguiente",
-        "previous":   "Anterior"
-    },
-    "aria": {
-        "sortAscending":  ": activate to sort column ascending",
-        "sortDescending": ": activate to sort column descending"
-    }
+    					"decimal":        "",
+    					"emptyTable":     "No data available in table",
+   					 	"info":           "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+    					"infoEmpty":      "Mostrando 0 a 0 de 0 entradas",
+    					"infoFiltered":   "(filtered from _MAX_ total entries)",
+    					"infoPostFix":    "",
+    					"thousands":      ",",
+    					"lengthMenu":     "Mostrar _MENU_ entradas",
+    					"loadingRecords": "Cargando...",
+    					"processing":     "Procesanso...",
+    					"search":         "Buscar:",
+    					"zeroRecords":    "No se encontraron datos..",
+    					"paginate": {
+    						"first":      "Primero",
+    						"last":       "Last",
+    						"next":       "Siguiente",
+    						"previous":   "Anterior"
+    					},
+    					"aria": {
+    						"sortAscending":  ": activate to sort column ascending",
+    						"sortDescending": ": activate to sort column descending"
+    					}
 }
        					 });
 				}
@@ -187,7 +187,8 @@ function enviarDatos(){
 						responsive:true,
 						"searching": false,
 						"paging": false,
-						"ordering": false
+						"ordering": false,
+						"info": false
 
        					 });
 
@@ -266,7 +267,8 @@ function agregarCategoria()
 						responsive:true,
 						"searching": false,
 						"paging": false,
-						"ordering": false
+						"ordering": false,
+						"info": false
 
        					 });
 	 var nombre_categoria = $("#nombre_categoria").val();
