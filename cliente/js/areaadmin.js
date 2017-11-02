@@ -23,3 +23,9 @@ function agregarAlmacenes()
 	$("#page-wrapper").load("./pages/agregaralmacen.html");
 	
 }
+
+function agregarCategorias()
+{
+	$("#page-wrapper").load("./pages/agregarcategoria.html");
+	
+}

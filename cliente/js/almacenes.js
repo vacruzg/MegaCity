@@ -22,7 +22,7 @@ function listarAlmacenes()
 			 "operacion" : "listar",
 			 "datos" : ""
 		 }, //Son los parametros que voy a enviar a la consulta
-		 url: API_URL + "almacenes/listaralmacenes.php", //Aqui se pone la URL del servicio a consumir
+		 url: API_URL + "almacenes/gestionalmacenes.php", //Aqui se pone la URL del servicio a consumir
 		 success: function(data){
 			 var datos = JSON.parse(data);
 			 //Si no hay problema y consultamos bien
@@ -76,6 +76,7 @@ function listarAlmacenes()
 function listarCategoria()
 {
 
+
    $('#file-es').fileinput({
         theme: 'fe',
         language: 'es',
@@ -107,7 +108,7 @@ showUpload : false,
 			 "operacion" : "categoria",
 			 "datos" : ""
 		 }, //Son los parametros que voy a enviar a la consulta
-		 url: API_URL + "almacenes/listaralmacenes.php", //Aqui se pone la URL del servicio a consumir
+		 url: API_URL + "almacenes/gestionalmacenes.php", //Aqui se pone la URL del servicio a consumir
 		 success: function(data){
 			 var datos = JSON.parse(data);
 			 var i =0;
@@ -153,50 +154,40 @@ showUpload : false,
 	});
 
 
-
+ enviarDatos();
 }
 
 function enviarDatos(){
 
-	
-	 
+	$("#agregar").on("submit", function(e) {
+	e.preventDefault();
+     var formData = new FormData(this);
+
 	 var nombre_almacen = $("#nombre_almacen").val();
 	 var pagina_web = $("#pagina_web").val();
 	 var horario_atencion = $("#horario_atencion").val();	
 	 var logo = $("#logo").val();
      var categoria = $("#categoria").val();
+     var operacion = "crear";
+     
 
      if(nombre_almacen!="" && pagina_web!="" && horario_atencion!="" && categoria!="" )
      {
      
 
-	 $.ajaxSetup({
-	    // force ajax call on all browsers
-	    cache: false,
-	    // Enables cross domain requests
-	    crossDomain: true,
-	    // Helps in setting cookie
-	    xhrFields: {
-	        withCredentials: false
-	    }
-	});
-   
-   var datos = {
-          "nombre_almacen":nombre_almacen ,
-          "pagina_web":pagina_web,
-          "horario_atencion": horario_atencion,
-          //"logo": logo,
-          "categoria": categoria
-         }
+     formData.append('nombre_almacen', nombre_almacen);
+     formData.append('pagina_web', pagina_web);
+	 formData.append('categoria', categoria);
+	 formData.append('operacion', operacion);
 
     $.ajax({
+    	url: API_URL + "almacenes/gestionalmacenes.php", 
 		 type: "POST",
-		 data: {
-			 "operacion" : "crear",
-			 "datos" : datos
-		 }, //Son los parametros que voy a enviar a la consulta
-		 url: API_URL + "almacenes/listaralmacenes.php", //Aqui se pone la URL del servicio a consumir
-
+		 data:formData, //Son los parametros que voy a enviar a la consulta
+		 //Aqui se pone la URL del servicio a consumir
+         contentType: false,       // The content type used when sending data to the server.
+				cache: false,             // To unable request pages to be cached
+				processData:false,        // To send DOMDocument or non processed data file it is set to false
 		 success: function(data){
 			 var datos = JSON.parse(data);
 			 //Si no hay problema y guardo correctamente
@@ -213,16 +204,90 @@ function enviarDatos(){
 				$("#pagina_web").val("");			
 				$("#horario_atencion").val("");	
 				$("#logo").val("");	
+				$(".fileinput-remove").click();
+				 
 			 }
 			 else{
-				 $(".alert-custom-clima-error").show();
+				 $("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
 			}			 
 		 },
 		 error: function(XMLHttpRequest, textStatus, errorThrown) {
-				$(".alert-custom-clima-error").show();
+				$("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
 		 }
 	});
 	
 }
 
-	}
+
+	});
+
+}
+
+function agregarCategoria()
+{
+	 var nombre_categoria = $("#nombre_categoria").val();
+	 var descripcion = $("#descripcion").val();
+
+     if(nombre_categoria!="" && descripcion!="")
+     {
+     
+
+	 $.ajaxSetup({
+	    // force ajax call on all browsers
+	    cache: false,
+	    // Enables cross domain requests
+	    crossDomain: true,
+	    // Helps in setting cookie
+	    xhrFields: {
+	        withCredentials: false
+	    }
+	});
+   
+   var datos = {
+          "nombre_categoria":nombre_categoria ,
+          "descripcion":descripcion
+         }
+
+    $.ajax({
+		 type: "POST",
+		 data: {
+			 "operacion" : "crear_categoria",
+			 "datos" : datos
+		 }, //Son los parametros que voy a enviar a la consulta
+		 url: API_URL + "almacenes/gestionalmacenes.php", //Aqui se pone la URL del servicio a consumir
+
+		 success: function(data){
+			 var datos = JSON.parse(data);
+			 //Si no hay problema y guardo correctamente
+			 if(datos['estado'] == true){				 
+				//Se muestra mensaje de ok
+				
+			
+				$("#myModal").modal();
+				$("#modal-title").html("Información");
+			    $("#message").html("Se ha guardado correctamente la Información");
+				//Se limpian los datos del formulario
+				//$("#tiempo option:selected").text();
+				$("#nombre_categoria").val("");
+				$("#descripcion").val("");			
+			 }
+			 else{
+				 $("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+			}			 
+		 },
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+		 }
+	});
+	
+}
+
+}
