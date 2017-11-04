@@ -1,0 +1,53 @@
+<section class="container">
+    <section class="row vertical-offset-100">
+        <section class="col-md-4 col-md-offset-4">
+            <section class="panel panel-default">
+                <section class="panel-heading">
+                    <h3 class="panel-title">Subir Factura</h3>
+                    <section id="answ"></section>
+                </section>
+                <section class="panel-body">
+                    <form id="uploadimage" action="" method="post" enctype="multipart/form-data">
+                        <fieldset>
+                            <section class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Seleccione la imagen</label>
+                                <section id="selectImage" class="seleccionImagen input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file">
+                                            Browse… <input type="file" id="imgInp">
+                                        </span>
+                                    </span>
+                                    <input type="file" class="form-control" readonly required="true">
+                                </section>
+                                <img id='img-upload'/>
+                            </section>
+
+                            <section class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Seleccione almacen</label>
+                                <section id="almacen" class="seleccionImagen">
+                                    <select name="seleccion" id="seleccion" class="form-control" required>
+                                        <option value="">----------</option>
+                                        <option value="1">Americanino</option>
+                                        <option value="2">Big john</option>
+                                        <option value="3">Bosi</option>
+                                    </select>
+                                </section>
+                            </section>
+
+                            <section class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Valor factura</label>
+                                <section>
+                                    <input type="number" id="valor_factura" required="true">
+                                </section>
+                            </section>
+                        </fieldset>
+                    </form>
+                </section>
+                <section class="modal-footer ">
+                    <button type="submit" class="btn btn-danger btn-default pull-right "><span class="glyphicon glyphicon-remove"></span> Cancelar </button>
+                    <button type="submit" class="btn btn-success btn-default pull-left "><span class="glyphicon glyphicon-ok"></span> Subir </button>
+                </section>
+    </section>
+</section>
+</section>
+</section>

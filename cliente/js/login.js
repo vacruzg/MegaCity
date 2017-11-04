@@ -14,37 +14,44 @@ function setApp(){
 }
 
 function loadAnswer(){
-	$("#myPage").load("cliente/areaCliente.html", function(){
-		$("#logOut").on("click", logOut);
-		$("#uploadimage").on("submit", function(e) {
-			e.preventDefault();
-			$("#message").empty();
-			$('#loading').show();
-			var formData = new FormData(this);
-			var username = localStorage.getItem("idUserMegacity");
-			var almacen = $('#seleccion option:selected').text();
-			var valor_factura = $('#valor_factura').val();
-			formData.append('localStorage', username);
-			formData.append('valor_factura', valor_factura);
-			formData.append('almacen', almacen);
+	$("#myPage").load("cliente/areaCliente.html", cargarMenuAreaCliente);
+}
 
-			$.ajax({
-				url: API_URL+"facturas/crear_factura.php", // Url to which the request is send
-				type: "POST",             // Type of request to be send, called as method
-				data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-				contentType: false,       // The content type used when sending data to the server.
-				cache: false,             // To unable request pages to be cached
-				processData:false,        // To send DOMDocument or non processed data file it is set to false
+function cargarMenuAreaCliente(){
+	var screen = window.innerWidth;
+	if(screen<768){
+		hideMenu();
+	}
+	$("#logOut").on("click", logOut);
+	$("#facturas").on("click", cargarRegistroFacturas);
+	$("#uploadimage").on("submit", function(e) {
+		e.preventDefault();
+		$("#message").empty();
+		$('#loading').show();
+		var formData = new FormData(this);
+		var username = localStorage.getItem("idUserMegacity");
+		var almacen = $('#seleccion option:selected').text();
+		var valor_factura = $('#valor_factura').val();
+		formData.append('localStorage', username);
+		formData.append('valor_factura', valor_factura);
+		formData.append('almacen', almacen);
 
-				success: function(data){   // A function to be called if request succeeds
+		$.ajax({
+			url: API_URL+"facturas/crear_factura.php", // Url to which the request is send
+			type: "POST",             // Type of request to be send, called as method
+			data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+			contentType: false,       // The content type used when sending data to the server.
+			cache: false,             // To unable request pages to be cached
+			processData:false,        // To send DOMDocument or non processed data file it is set to false
 
-					$('#myModal').modal();
-					$("#modal-title").html("Observación");
-					$("#message").html(data);
-					$("#file").val("");
+			success: function(data){   // A function to be called if request succeeds
+
+				$('#myModal').modal();
+				$("#modal-title").html("Observación");
+				$("#message").html(data);
+				$("#file").val("");
 					
-				}
-			});
+			}
 		});
 	});
 }
@@ -102,11 +109,16 @@ function logOut(){
 }
 
 function cargarMenu(){
+	var screen = window.innerWidth;
+	if(screen<768){
+		hideMenu();
+	}
 	$("#acceso").on("submit", function(e){
 			e.preventDefault();
 			sendData();
 			$("#answ").text("Cargando...");
 	});
+	$("#iniciarSesion").on("click", cargarIniciarSesion);
 	$("#inicio").on("click", cargarInicio);
 	$("#almacenes").on("click", cargarAlmacenes);
 	$("#eventos").on("click", cargarEventos);
@@ -122,6 +134,39 @@ function resetPage(){
 	$("#bodyAlmacenes").empty();
 	$("#bodyEventos").empty();
 	$("#bodyRegistro").empty();
+	$("#bodySesion").empty();
+}
+
+function resetPageAreaCliente(){
+	$("#bodyRegistroFacturas").empty();
+}
+
+function cargarIniciarSesion(){
+	resetPage();
+
+	var screen = window.innerWidth;
+
+	if(screen>768){
+		funcionModal();
+		cargarMenu();
+	}
+	else{
+		$("#bodySesion").load("cliente/login.html", cargarMenu);
+	}	
+}
+
+function cargarRegistroFacturas(){
+	resetPageAreaCliente();
+
+	var screen = window.innerWidth;
+
+	if(screen>768){
+		funcionModal();
+		cargarMenuAreaCliente();
+	}
+	else{
+		$("#bodyRegistroFacturas").load("cliente/registrarFacturas.html", cargarMenuAreaCliente);
+	}	
 }
 
 function cargarInicio(){
@@ -238,4 +283,11 @@ function getAll(){
   	minutes = minutes < 10 ? '0'+minutes : minutes;
   	var strTime = hours + ':' + minutes + ' ' + ampm;
   	return strTime;
+ }
+
+ function hideMenu(){
+ 	var target = $('.navbar-collapse');
+ 	if(target.hasClass('in')){
+ 		target.removeClass('in').height(0).css('overflow','hidden');
+ 	}
  }

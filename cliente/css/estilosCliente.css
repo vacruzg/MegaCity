@@ -45,3 +45,10 @@ th{
  width: 150px;
  padding: 10px;
 }
+
+@media screen and (max-width: 480px) {
+  select{
+    text-align: center;
+    text-align-last: center;
+  }
+}

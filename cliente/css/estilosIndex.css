@@ -108,7 +108,8 @@ body {
   }
   .navbar {
       margin-bottom: 0;
-	 background: linear-gradient(to bottom, rgba(229,109,175,1) 0%,rgba(244,186,224,0) 100%);
+      //background: linear-gradient(to bottom, rgba(229,109,175,1) 0%,rgba(244,186,224,0) 100%);
+      background-color: #e3f2fd;
       border: 0;
       font-size: 15px,bold, !important;
       line-height: 1.42857143 !important;
@@ -231,6 +232,18 @@ body {
   .fotoEvento{
 	  width: 500px;
 	  height: 300px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px black;
+  }
+  
+  #seccionEventos{
+	  background-color: #E0E0E0;
+	  border-radius: 5px;
+	  box-shadow: 0px 10px 5px #999;
+  }
+
+  .vertical-offset-100{
+    padding-top:100px;
   }
   
   @keyframes slide {
@@ -262,9 +275,6 @@ body {
         width: 100%;
         margin-bottom: 35px;
     }
-	.navbar{
-		background-color: rgba(244,186,224,100);
-	}
 	img.logo {
         width: 60px;
 		padding: 0;
@@ -276,30 +286,27 @@ body {
   }
   @media screen and (max-width: 480px) {
     img.logo {
-        width: 60px;
-		padding: 0;
-		margin: 5px 10px;
+      width: 60px;
+		  padding: 0;
+      margin-left: -30px;
+      left: 50%;
+      position: absolute;
     }
 	.logoImg {
-		display: inline-block;
-		width: 75%;
-		text-align: center;	
+		display: block;
+    vertical-align: middle;
 	}
 	#myCarousel {
 		display: none;
-	}
-	.navbar-right {
-		margin: 0;
-		padding: 0;
 	}
 	.navbar-toggle {
 		float: left;
 	}
 	.evento{
-		width: 300px;
+		width: 200px;
 	}
 	.fotoEvento{
-		width: 300px;
-		height: 200px;
+		width: 200px;
+		height: 100px;
 	}
   }
