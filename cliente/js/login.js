@@ -14,7 +14,39 @@ function setApp(){
 }
 
 function loadAnswer(){
-	$("#myPage").load("cliente/areaCliente.html", cargarMenuAreaCliente);
+	$("#myPage").load("cliente/areaCliente.html", function(){
+		$("#logOut").on("click", logOut);
+		$("#uploadimage").on("submit", function(e) {
+			e.preventDefault();
+			$("#message").empty();
+			$('#loading').show();
+			var formData = new FormData(this);
+			var username = localStorage.getItem("idUserMegacity");
+			var almacen = $('#seleccion option:selected').text();
+			var valor_factura = $('#valor_factura').val();
+			formData.append('localStorage', username);
+			formData.append('valor_factura', valor_factura);
+			formData.append('almacen', almacen);
+
+			$.ajax({
+				url: API_URL+"facturas/crear_factura.php", // Url to which the request is send
+				type: "POST",             // Type of request to be send, called as method
+				data: formData, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+				contentType: false,       // The content type used when sending data to the server.
+				cache: false,             // To unable request pages to be cached
+				processData:false,        // To send DOMDocument or non processed data file it is set to false
+
+				success: function(data){   // A function to be called if request succeeds
+
+					$('#myModal').modal();
+					$("#modal-title").html("Observación");
+					$("#message").html(data);
+					$("#file").val("");
+					
+				}
+			});
+		});
+	});
 }
 
 function cargarMenuAreaCliente(){
