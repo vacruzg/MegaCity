@@ -30,16 +30,20 @@ function listarAlmacenes()
 				$("#almacenes").html('');
 				
 				if(datos['datos'].length >0){
+					var i=0;
 
 					$.each( datos['datos'], function( key, value ) {
-			  
+			          i++;
 					  //construyo como quiero pintar los datos, esto se puede hacer diferente. Es un ejemplo
 					  
                       
 					  tabla = '<tr>';
-					  tabla += '<td>' + value.nombre_almacen + '</td>';
-					  tabla += '<td>' + value.pagina_web + '</td>';
-					  tabla += '<td>' + value.horario_atencion + '</td>';
+					  tabla += '<td id="cod_almacen'+value.cod_almacen+'">' + value.cod_almacen + '</td>';
+					  tabla += '<td id="nombre'+value.cod_almacen+'">' + value.nombre_almacen + '</td>';
+					  tabla += '<td id="pagina'+value.cod_almacen+'">' + value.pagina_web + '</td>';
+					  tabla += '<td id="horario'+value.cod_almacen+'">' + value.horario_atencion + '</td>';
+					  tabla += '<td><p data-placement="top" data-toggle="tooltip" title="Editar"><button id='+value.cod_almacen+' onclick="actualizaAlmacen(id)" class="btn btn-primary btn-xs" data-title="Editar"><span class="glyphicon glyphicon-pencil"></span></button></p></td>';
+					  tabla += '<td><p data-placement="top" data-toggle="tooltip" title="Eliminar"><button id='+value.cod_almacen+' onclick="eliminarAlmacen(id)" class="btn btn-danger btn-xs" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>';
 					  tabla += '</tr>';
 					  
 					  //Pongo en el div los datos que voy creando.
@@ -73,8 +77,11 @@ function listarAlmacenes()
     						"sortAscending":  ": activate to sort column ascending",
     						"sortDescending": ": activate to sort column descending"
     					}
+
+
 }
        					 });
+
 				}
 				else{
 					//$("#item_pendiente").show();
@@ -179,6 +186,7 @@ showUpload : false,
 
 
  enviarDatos();
+
 }
 
 function enviarDatos(){
@@ -333,3 +341,142 @@ function agregarCategoria()
 }
 
 }
+
+function actualizaAlmacen(id)
+{
+     var cod_almacen = document.getElementById('cod_almacen'+id).innerHTML;
+     var nombre_almacen = document.getElementById('nombre'+id).innerHTML;
+     var pagina_web = document.getElementById('pagina'+id).innerHTML;
+     var horario_atencion = document.getElementById('horario'+id).innerHTML;
+
+ 
+    $("#edit").modal();
+    $("#codigo").html(cod_almacen);
+    document.getElementById("nombre").value = nombre_almacen;
+    document.getElementById("pagina").value = pagina_web;
+    document.getElementById("horario").value = horario_atencion;
+   
+}
+
+function datosActualizarAlmacen()
+{
+	 var cod_almacen= document.getElementById('codigo').innerHTML;
+	 var nombre_almacen = $("#nombre").val();
+	 var pagina_web = $("#pagina").val();
+	 var horario_atencion = $("#horario").val();
+
+   
+   
+   var datos = {
+          "cod_almacen":cod_almacen,
+          "nombre_almacen":nombre_almacen,
+          "pagina_web":pagina_web,
+          "horario_atencion":horario_atencion
+         }
+
+    $.ajax({
+		 type: "POST",
+		 data: {
+			 "operacion" : "actualiza_almacen",
+			 "datos" : datos
+		 }, //Son los parametros que voy a enviar a la consulta
+		 url: API_URL + "almacenes/gestionalmacenes.php", //Aqui se pone la URL del servicio a consumir
+
+		 success: function(data){
+			 var datos = JSON.parse(data);
+			 //Si no hay problema y guardo correctamente
+			 if(datos['estado'] == true){				 
+				//Se muestra mensaje de ok
+				
+			
+				$("#myModal").modal();
+				$("#modal-title").html("Información");
+			    $("#message").html("Se ha guardado correctamente la Información");
+			    
+            
+				//Se limpian los datos del formulario
+				//$("#tiempo option:selected").text();
+					
+			 }
+			 else{
+				 $("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+			}			 
+		 },
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+		 }
+	});
+	
+}
+
+function recargarPaginaAlmacen()
+{
+
+	    $('div').removeClass('modal-backdrop');
+	    $('#myPage').removeClass('modal-open');
+	   // location.reload();
+	    $("#page-wrapper").load("./pages/almacenes.html");
+}
+   
+function eliminarAlmacen(id)
+{
+      $("#delete").modal();
+      $("#eliminar").html(id);
+	 
+}
+   
+
+function datosEliminarAlmacen()
+{
+	 var cod_almacen= document.getElementById('eliminar').innerHTML;
+	
+   
+   
+   var datos = {
+          "cod_almacen":cod_almacen,
+         }
+
+    $.ajax({
+		 type: "POST",
+		 data: {
+			 "operacion" : "elimina_almacen",
+			 "datos" : datos
+		 }, //Son los parametros que voy a enviar a la consulta
+		 url: API_URL + "almacenes/gestionalmacenes.php", //Aqui se pone la URL del servicio a consumir
+
+		 success: function(data){
+			 var datos = JSON.parse(data);
+			 //Si no hay problema y guardo correctamente
+			 if(datos['estado'] == true){				 
+				//Se muestra mensaje de ok
+				
+			
+				$("#myModal").modal();
+				$("#modal-title").html("Información");
+			    $("#message").html("Se ha eliminado almacén!");
+			    
+            
+				//Se limpian los datos del formulario
+				//$("#tiempo option:selected").text();
+					
+			 }
+			 else{
+				 $("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+			}			 
+		 },
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+		 }
+	});
+	
+}
+
+

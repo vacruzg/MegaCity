@@ -29,3 +29,14 @@ function agregarCategorias()
 	$("#page-wrapper").load("./pages/agregarcategoria.html");
 	
 }
+
+function modificaAlmacen()
+{
+	$("#page-wrapper").load("./pages/modificaalmacen.html");
+	
+}
+function eliminaAlmacen()
+{
+	$("#page-wrapper").load("./pages/eliminaalmacen.html");
+	
+}

@@ -28,6 +28,10 @@ switch ($operacion){
                     break;
     case "crear_categoria" : crearCategoria($conn);
                     break;
+    case "actualiza_almacen" : actualizarAlmacen($conn);
+                    break;
+    case "elimina_almacen" : eliminarAlmacen($conn);
+                    break;
 
 }
 
@@ -63,6 +67,7 @@ function listarAlmacenes($conn)
     	while($row = $result->fetch_assoc())
     	{
     		array_push($datos, array(
+                       'cod_almacen'=>$row['COD_ALMACEN'],
             		   'nombre_almacen'=>$row['NOMBRE_ALMACEN'],
             		   'pagina_web'=>$row['ENLACE_WEB'],
             		   'horario_atencion'=>$row['HORARIO_ATENCION']
@@ -284,6 +289,104 @@ function codigoCategoria($conn)
 
    return $codigo;
 
+}
+
+function actualizarAlmacen($conn)
+{
+    //Inicializamos lo que retornaremos
+    $data  = array('estado'=>'', 'datos'=>array());
+    $datos = $_POST['datos'];
+
+    //Capturo los datos que llegan por parametros   
+    $cod_almacen= $datos['cod_almacen'];
+    $nombre_almacen= $datos['nombre_almacen'];
+    $pagina_web= $datos['pagina_web'];
+    $horario_atencion= $datos['horario_atencion'];
+       
+    $sql = "UPDATE ALMACEN SET NOMBRE_ALMACEN = '". $nombre_almacen."', ENLACE_WEB = '". $pagina_web."', HORARIO_ATENCION = '".$horario_atencion ."' WHERE COD_ALMACEN = '". $cod_almacen."'";
+
+  //  echo "Consulta=".$sql;
+
+   $result = $conn->query($sql);
+   
+    //Si ocurrio algun error en la consulta
+    if(!$result){
+        $data['estado'] = false;
+        $data['datos'] = "Ocurrio un error en la consulta";
+        
+        //De esta forma estamos enviando los datos
+        echo json_encode($data);
+        
+        //Cerramos la conexión
+        cerrarConexionBaseDeDatos($conn);
+        
+        //Terminamos el metodo
+        return;
+    }
+    
+    //Si la consulta se ejecuto con éxito
+    $data['estado'] = true;
+    //De esta forma estamos enviando los datos
+    echo json_encode($data);    
+    cerrarConexionBaseDeDatos($conn);
+}
+
+function eliminarAlmacen($conn)
+{
+
+    //Inicializamos lo que retornaremos
+    $data  = array('estado'=>'', 'datos'=>array());
+    $datos = $_POST['datos'];
+
+    //Capturo los datos que llegan por parametros   
+    $cod_almacen= $datos['cod_almacen'];
 
 
+    $result2=eliminarCategoriaxAlmacen($conn,$cod_almacen); 
+    $result3=eliminarfacturaxAlmacen($conn,$cod_almacen);  
+    $sql = "DELETE FROM ALMACEN WHERE COD_ALMACEN = '". $cod_almacen."'";
+
+   
+   $result = $conn->query($sql);
+   
+    //Si ocurrio algun error en la consulta
+    if(!$result && !$result2 && !$result3){
+        $data['estado'] = false;
+        $data['datos'] = "Ocurrio un error en la consulta";
+        
+        //De esta forma estamos enviando los datos
+        echo json_encode($data);
+        
+        //Cerramos la conexión
+        cerrarConexionBaseDeDatos($conn);
+        
+        //Terminamos el metodo
+        return;
+    }
+    
+    //Si la consulta se ejecuto con éxito
+    $data['estado'] = true;
+    //De esta forma estamos enviando los datos
+    echo json_encode($data);    
+    cerrarConexionBaseDeDatos($conn);
+}
+
+function eliminarCategoriaxAlmacen($conn,$cod_almacen)
+{
+   
+    $sql = "DELETE FROM CATEGORIA_X_ALMACEN WHERE COD_ALMACEN = '". $cod_almacen."'";
+    $result = $conn->query($sql);
+
+
+    return $result;
+}
+
+function eliminarfacturaxAlmacen($conn,$cod_almacen)
+{
+   
+    $sql = "DELETE FROM FACTURA WHERE COD_ALMACEN = '". $cod_almacen."'";
+    $result = $conn->query($sql);
+
+
+    return $result;
 }

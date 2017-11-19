@@ -23,9 +23,12 @@ $(document).ready(function(){
                 <table width="100%" class="table table-striped table-bordered table-hover" id="tablaalmacenes">
                                 <thead>
                                     <tr>
+                                        <th>Codigo</th>
                                         <th>Nombre Almacen</th>
                                         <th>Página Web</th>
-                                        <th>Horario de atención</th>                                        
+                                        <th>Horario de atención</th>   
+                                         <th>Editar</th>
+                                        <th>Eliminar</th>                                      
                                     </tr>
                                 </thead>
                                 <tbody id="almacenes" >
@@ -50,5 +53,85 @@ $(document).ready(function(){
                 <!-- /.col-lg-6 -->
             
             <!-- /.row -->
+
+
+    <!--Modal para eliminar almacén-->
+
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            <h4 class="modal-title custom_align" id="codigoEliminar">Eliminar almacen de codigo: <label id="eliminar"></label></h4>
+        </div>
+        <div class="modal-body">
+
+         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> ¿Está seguro de eliminar este almacén?</div>
+
+     </div>
+     <div class="modal-footer ">
+        <button onclick="datosEliminarAlmacen()" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Si</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>No</button>
+    </div>
+</div>
+<!-- /.modal-content --> 
+</div>
+<!-- /.modal-dialog --> 
+</div>
+
+<!--Modal para editar almacén-->
+
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Editar Almacén</h4>
+      </div>
+       <form id="agregar" method="post" action="" onsubmit="datosActualizarAlmacen(); return false" accept-charset="utf-8" enctype="multipart/form-data">
+          <div class="modal-body">
+           <div class="form-group">
+           <h4 class="modal-title custom_align">Editar almacen de codigo: <label id="codigo"></label></h4>
+           </div>
+          <div class="form-group">
+        <input class="form-control " id="nombre" type="text" placeholder="" required="true">
+        </div>
+        <div class="form-group">
+        
+        <input class="form-control " id="pagina" type="text" placeholder="" required="true">
+        </div>
+        <div class="form-group">
+        <input class="form-control " id ="horario" type="text" placeholder="" required="true">
     
-   
+        
+        </div>
+      </div>
+     
+          <div class="modal-footer ">
+        <!--<button onclick="datosActualizarAlmacen()" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign" ></span>Actualizar</button>-->
+        <input  type="submit" class="btn btn-primary" onclick="" value="Actualizar almacén">
+      </div>
+       </form>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+    
+
+    <div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p id="message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="recargarPaginaAlmacen()">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
