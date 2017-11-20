@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-default navbar-fixed-top navbar-light">
     <section class="container">
         <section class="navbar-header">
@@ -12,8 +14,8 @@
         <section class="collapse navbar-collapse" id="myNavbar">
             <br>
             <ul class="nav navbar-nav navbar-right ">
-                <li><a type="button" data-toggle="modal" id="iniciarSesion">Iniciar sesion</a></li>
-                <li><a>Registrarse</a></li>
+                <li><a type="button" data-toggle="modal" data-target="#iniciosession"  id="iniciarSesion">Iniciar sesion</a></li>
+                <li><a type="button" data-toggle="modal" data-target="#registro" onclick="listarMunicipios()">Registrarse</a></li>
             </ul>
             <ul class="nav navbar-nav">
                 <li><a id="inicio" href="#bodyInicio">Inicio</a></li>
@@ -79,7 +81,7 @@
     </section>
 </section>
 
-<section class="modal fade " id="myModal" role="dialog">
+<section class="modal fade " id="iniciosession" role="dialog">
     <section class="modal-dialog">
         <!-- Modal content-->
         <section class="modal-content">
@@ -106,6 +108,90 @@
             </section>
             <section class="modal-footer ">
                 <button type="submit" class="btn btn-danger btn-default pull-left " data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar </button>
+            </section>
+        </section>
+    </section>
+</section>
+
+
+<section class="modal fade " id="registro" role="dialog">
+ <section class="modal-dialog">
+        <!-- Modal content-->
+        <section class="modal-content">
+            <section class="modal-header headLogin">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="headLogin"><span class="glyphicon glyphicon-lock"></span> Registro cliente</h4>
+                <section id="answ"></section>
+            </section>
+            <section class="modal-body" style="padding:0px 50px;">  
+                <form id="acceso" method="POST" action="" accept-charset="utf-8">
+                 <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nombres</label>
+      <input type="name" class="form-control" id="nombre" placeholder="Nombres">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Apellidos</label>
+      <input type="name" class="form-control" id="apellido" placeholder="Apellidos">
+    </div>
+  </div>
+ <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Cédula</label>
+      <input type="text" class="form-control" id="cedula" placeholder="Cédula">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Edad</label>
+      <input type="number" class="form-control" id="edad" placeholder="Edad">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Teléfono</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="Teléfono">
+    </div>
+  </div>
+  <h3>Datos de direccion:</h3>
+  <div class="form-group col-md-6">
+    <label for="inputAddress">Calle</label>
+    <input type="text" class="form-control" id="calle" placeholder="1234 Main St">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="inputAddress2">Carrera</label>
+    <input type="text" class="form-control" id="carrera" placeholder="Carrera xx">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="inputAddress2">Número</label>
+    <input type="text" class="form-control" id="numero" placeholder="20-20">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="inputAddress2">Barrio</label>
+    <input type="text" class="form-control" id="barrio" placeholder="La Cabaña">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="inputAddress2">Apto</label>
+    <input type="text" class="form-control" id="apartamento" placeholder="Apartmento, studio, or floor">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="inputAddress2">Piso</label>
+    <input type="text" class="form-control" id="piso" placeholder="Piso 8">
+  </div>
+  <div class="form-row">
+    <div class="form-group ">
+      <label for="inputState">Ciudad</label>
+      <select id="municipio" class="form-control">
+       
+      </select>
+    </div>
+
+  </div>
+  
+                </form>     
+            </section>
+            <section class="modal-footer ">
+                  <button type="submit" class="btn btn-primary">Registrarse</button>
             </section>
         </section>
     </section>
