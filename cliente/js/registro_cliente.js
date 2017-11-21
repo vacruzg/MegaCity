@@ -72,5 +72,84 @@ function listarMunicipios()
 
 function registroCliente()
 {
-	
+	 var nombres = $("#nombre").val();
+	 var apellidos = $("#apellido").val();
+	 var cedula = $("#cedula").val();
+	 var password = $("#password").val();
+	 var edad = $("#edad").val();
+	 var telefono = $("#telefono").val();
+	 var calle = $("#calle").val();
+	 var carrera = $("#carrera").val();
+	 var numero = $("#numero").val();
+	 var barrio = $("#barrio").val();
+	 var apartamento = $("#apartamento").val();
+	 var piso = $("#piso").val(); 	 
+	 var municipio = $("#municipio").val();
+
+    
+     $.ajaxSetup({
+	    // force ajax call on all browsers
+	    cache: false,
+	    // Enables cross domain requests
+	    crossDomain: true,
+	    // Helps in setting cookie
+	    xhrFields: {
+	        withCredentials: false
+	    }
+	});
+
+    var datos = {
+
+        "nombres":nombres,
+        "apellidos":apellidos,
+        "cedula":cedula,
+        "password":password,
+        "edad":edad,
+        "telefono":telefono,
+        "calle":calle,
+        "carrera":carrera,
+        "numero":numero,
+        "barrio":barrio,
+        "apartamento":apartamento,
+        "piso":piso,
+        "municipio":municipio
+          
+         }
+   
+         $.ajax({
+		 type: "POST",
+		 data: {
+			 "operacion" : "crear_usuario",
+			 "datos" : datos
+		 }, //Son los parametros que voy a enviar a la consulta
+		 url: API_URL + "cliente/registro_cliente.php", //Aqui se pone la URL del servicio a consumir
+
+		 success: function(data){
+			 var datos = JSON.parse(data);
+			 //Si no hay problema y guardo correctamente
+			 if(datos['estado'] == true){				 
+				//Se muestra mensaje de ok
+				
+			
+				$("#myModal").modal();
+				$("#modal-title").html("Información");
+			    $("#message").html("Se ha guardado correctamente la Información");
+				//Se limpian los datos del formulario
+				//$("#tiempo option:selected").text();
+				$("#nombre_categoria").val("");
+				$("#descripcion").val("");			
+			 }
+			 else{
+				 $("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+			}			 
+		 },
+		 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#myModal").modal();
+				$("#modal-title").html("ERROR");
+			    $("#message").html("Hubo un error en guardar la Información");
+		 }
+	});
+        
 }

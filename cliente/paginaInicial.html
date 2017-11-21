@@ -124,33 +124,33 @@
                 <section id="answ"></section>
             </section>
             <section class="modal-body" style="padding:0px 50px;">  
-                <form id="acceso" method="POST" action="" accept-charset="utf-8">
+                <form id="acceso" onsubmit="registroCliente()" method="POST" action="" accept-charset="utf-8">
                  <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Nombres</label>
-      <input type="name" class="form-control" id="nombre" placeholder="Nombres">
+      <input type="name" class="form-control" id="nombre" placeholder="Nombres" required="true">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Apellidos</label>
-      <input type="name" class="form-control" id="apellido" placeholder="Apellidos">
+      <input type="name" class="form-control" id="apellido" placeholder="Apellidos" required="true">
     </div>
   </div>
  <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Cédula</label>
-      <input type="text" class="form-control" id="cedula" placeholder="Cédula">
+      <input type="text" class="form-control" id="cedula" placeholder="Cédula" required="true">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <input type="password" class="form-control" id="password" placeholder="Password" required="true">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Edad</label>
-      <input type="number" class="form-control" id="edad" placeholder="Edad">
+      <input type="number" class="form-control" id="edad" placeholder="Edad" required="true">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Teléfono</label>
-      <input type="text" class="form-control" id="inputPassword4" placeholder="Teléfono">
+      <input type="text" class="form-control" id="telefono" placeholder="Teléfono">
     </div>
   </div>
   <h3>Datos de direccion:</h3>
@@ -168,7 +168,7 @@
   </div>
   <div class="form-group col-md-6">
     <label for="inputAddress2">Barrio</label>
-    <input type="text" class="form-control" id="barrio" placeholder="La Cabaña">
+    <input type="text" class="form-control" id="barrio" placeholder="La Cabaña" required="true">
   </div>
   <div class="form-group col-md-6">
     <label for="inputAddress2">Apto</label>
@@ -181,18 +181,37 @@
   <div class="form-row">
     <div class="form-group ">
       <label for="inputState">Ciudad</label>
-      <select id="municipio" class="form-control">
+      <select id="municipio" class="form-control" required="true">
        
       </select>
     </div>
 
   </div>
   
-                </form>     
+                 <section class="modal-footer ">
+                  <input t type="submit" class="btn btn-primary" value="Registrarse">
             </section>
-            <section class="modal-footer ">
-                  <button type="submit" class="btn btn-primary">Registrarse</button>
+              </form> 
             </section>
+          
+                 
         </section>
     </section>
 </section>
+
+  <div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p id="message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
