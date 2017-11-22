@@ -35,6 +35,8 @@ if(isset($_POST["login"])){
 			if($username == $dbusername && $password == $dbpassword){
 
 				$data['username'] = $username; 
+				$data['puntos'] = consultarPuntos($conn,$username);
+				$data['pwd'] = ($_POST['password']);
 				echo json_encode($data);
 				cerrarConexionBaseDeDatos($conn);
 				return;
@@ -60,5 +62,23 @@ if(isset($_POST["login"])){
 		return;
 	}
 }
+}
+
+function consultarPuntos($conn,$username)
+{
+   $sql = "SELECT SUM(PUNTOS_OTORGADOS) AS PUNTOS_OTORGADOS FROM FACTURA WHERE cod_usuario='".$username."'";
+
+    $result = $conn->query($sql);
+
+    $row = $result->fetch_assoc();
+  
+    $codigo = $row['PUNTOS_OTORGADOS'];
+
+    if($codigo==null)
+    {
+        $codigo = 0;
+    }
+
+   return $codigo;
 }
 ?>

@@ -6,16 +6,18 @@ $(document).on("ready", setApp);
 
 function setApp(){
 	if(localStorage.getItem("idUserMegacity")){
-		loadAnswer();
+		puntos();
 	}
 	else{
 		loadFormulario();
 	}
 }
 
-function loadAnswer(){
+function loadAnswer(puntos){
 	$("#myPage").load("cliente/areaCliente.html", function(){
 		$("#logOut").on("click", logOut);
+	
+		$("#puntosdisponibles").html("Puntos disponibles:"+puntos);
 		$("#uploadimage").on("submit", function(e) {
 			e.preventDefault();
 			$("#message").empty();
@@ -127,7 +129,9 @@ function saveStorage(data){
 	else{
 		if(localStorage){
 			localStorage.setItem("idUserMegacity", data["username"]);
-			loadAnswer();
+			localStorage.setItem("pwd", data["pwd"]);
+			var datos = data["puntos"];
+			loadAnswer(datos);
 		}
 		else{
 			alert("Navegador no soportado");
@@ -391,5 +395,29 @@ function getAll(){
 		 }
 	});
 
+
+}
+
+function puntos()
+{
+	var username = localStorage.getItem("idUserMegacity");
+	var password = localStorage.getItem("pwd");
+
+	$.ajax({
+		data: {
+			"login" : "true",
+		 	"username" : username,
+			"password" : password
+		},
+		type: 'POST',
+		datatype: 'json',
+		url: API_URL + "cliente/login_cliente.php",
+		success: function(data){
+			var dataParser = JSON.parse(data);
+			var datos = dataParser["puntos"];
+			loadAnswer(datos);
+			
+		}
+	});
 
 }

@@ -21,17 +21,23 @@
 
         <section class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right ">
-                <li><a id="misPuntos">Mis Puntos</a></li>
-                <li><a id="logOut">Logout</a></li>
+
+                <!--<li><a id="misPuntos" onclick="mostrarPuntos()">Mis Puntos</a></li>-->
+                <li><a id="logOut" >Logout</a></li>
+
             </ul>
+
             <ul class="nav navbar-nav">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#tiendas">Tiendas</a></li>
                 <li><a onclick="listarAlmacenes()" data-toggle="modal" data-target="#registrarFacturas">Registrar facturas</a></li>
                 <li><a href="#services">Gestionar datos personales</a></li>
                 <li><a href="#services">Canjear Puntos</a></li>
+                 <li><a id="puntosdisponibles" name="puntosdisponibles" style="font-weight: bold; font-size: 0.9em;"></a></li>
             </ul>
+
         </section>
+
     </section>
 </nav>
 
